@@ -20,4 +20,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('msg_test.urls')),
+    path('', include('orm_sqlalchemy_test.urls')),
 ]
