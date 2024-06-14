@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% if not error %}
+        <span>msgType:{{ msg_obj.label }}</span>
+        <br>
+{#        <span style="color:{{ msg_obj.color }}">msg:{{ msg }}</span>#}
+    {#    敏感词汇检查#}
+        {% load filters %}
+        <span style="color:{{ msg_obj.color }}">msg_source:{{ msg }}--msg_filter:{{ msg|word_check_replace }}</span>
+    {% else %}
+        <span>{{ error }}</span>
+    {% endif %}
+
+
+</body>
+</html>
