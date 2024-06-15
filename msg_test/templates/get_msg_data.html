@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% load filters %}
+    {% for msg in msgs %}
+        <li style="color:{{ msg.msg_obj.color }}">{{ msg.content }}-{{ msg.create_time|timestamp_format }}</li>
+    {% endfor %}
+</body>
+</html>

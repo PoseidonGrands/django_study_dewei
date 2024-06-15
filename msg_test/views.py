@@ -1,6 +1,9 @@
+import time
+
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from .models import *
 
 from msg_test.consts import MessageType
 
@@ -44,3 +47,43 @@ def get_msg_3(request, msg_type):
     data['msg_obj'] = msg_obj
     print(msg_obj.color)
     return render(request, template_file, data)
+
+
+def create_msg_data(request, msg_type):
+    template_file = 'create_msg_data.html'
+    # 验证消息类型是否存在
+    data = {}
+    try:
+        msg_obj = MessageType[msg_type]
+    except Exception as e:
+        data['error'] = f'没有这个消息类型:{e}'
+        return render(request, template_file, data)
+
+    # 消息是否为空
+    msg = request.GET.get('msg', '')
+    if msg is None:
+        data['error'] = f'消息不能为空'
+        return render(request, template_file, data)
+
+    # 保存到数据库
+    Message.objects.create(content=msg, msg_type=msg_obj.value[0], create_time=time.time())
+
+    return redirect(reverse('get_msg_data'))
+
+
+def get_msg_data(request):
+    template_file = 'get_msg_data.html'
+
+    # 搜索条件
+    search = request.GET.get('search', '')
+    # 从数据库读取消息
+    print(search)
+    if search:
+        msgs = Message.objects.filter(content__contains=search)
+    else:
+        msgs = Message.objects.all()
+
+    return render(request, template_file,
+                  {
+                      'msgs': msgs
+                  })

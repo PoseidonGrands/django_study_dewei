@@ -1,4 +1,5 @@
 import jieba
+import time
 from django import template
 
 from msg_test.consts import SENSITIVE_WORDS
@@ -35,3 +36,12 @@ def word_check_replace(value):
         res.append(word)
     print(res)
     return ''.join(res)
+
+
+@register.filter
+def timestamp_format(value):
+    try:
+        localtime = time.localtime(value)
+        return time.strftime('%Y-%m-%d %H:%M:%S', localtime)
+    except (TypeError, ValueError):
+        return value  # 如果转换失败，返回原始值

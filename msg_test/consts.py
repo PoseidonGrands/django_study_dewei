@@ -25,6 +25,10 @@ class MessageType(Enum):
     error = ('error', '错误', 'gray')
     danger = ('danger', '危险', 'red')
 
+    # @property
+    # def value(self):
+    #     return self.value[0]
+
     @property
     def label(self):
         return self.value[1]
