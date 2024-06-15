@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'msg_test',
     'orm_test',
-    'orm_sqlalchemy_test'
+    'orm_sqlalchemy_test',
+    'redis_test'
 ]
 
 MIDDLEWARE = [
@@ -100,6 +101,19 @@ DATABASES = {
         'PASSWORD': '2280139492',
         'HOST': '127.0.0.1',
         'PORT': '3306'
+    }
+}
+
+# redis
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'CONNECTION_POOL_KWARGS': {'max_connections': 200},
+            'PASSWORD': 'root'
+        }
     }
 }
 
