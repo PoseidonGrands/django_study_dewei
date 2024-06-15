@@ -5,8 +5,8 @@ from django.urls import reverse
 from msg_test.consts import MessageType
 
 
-# Create your views here.
 def get_msg_1(request):
+    """通过request获取url参数"""
     msg = request.GET.get('msg', '空消息')
     return render(request, 'index.html', {
         'msg': msg
@@ -14,6 +14,7 @@ def get_msg_1(request):
 
 
 def get_msg_2(request, msg):
+    """通过url获取参数/xx/参数"""
     if msg is None:
         msg = '空消息'
     return render(request, 'index.html', {
@@ -22,6 +23,7 @@ def get_msg_2(request, msg):
 
 
 def get_msg_3(request, msg_type):
+    """1和2结合"""
     template_file = 'msg_type.html'
     # 验证消息类型是否存在
     data = {}

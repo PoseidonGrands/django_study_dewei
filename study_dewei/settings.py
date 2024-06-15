@@ -11,10 +11,12 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from pymongo import MongoClient
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+MONGO_CLIENT = MongoClient(host='localhost', port=27017)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -26,6 +28,7 @@ SECRET_KEY = 'django-insecure-*l5vo*&=%*c&=efvoqey^ut7u*juf%igb1p=#=3@k3gsk1op6c
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
 
 
 # Application definition
@@ -40,7 +43,8 @@ INSTALLED_APPS = [
     'msg_test',
     'orm_test',
     'orm_sqlalchemy_test',
-    'redis_test'
+    'redis_test',
+    'mongo_test'
 ]
 
 MIDDLEWARE = [
