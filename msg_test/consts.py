@@ -32,10 +32,14 @@ class MessageType(Enum):
     @property
     def label(self):
         return self.value[1]
+        # return self.value[1]
 
     @property
     def color(self):
         return self.value[2]
 
 
+# 二级敏感词，只是在输出时屏蔽
 SENSITIVE_WORDS = ['你好', '世界']
+# 一级敏感词，不入库
+SENSITIVE_WORDS_DANGER = ['卧槽', '傻逼']

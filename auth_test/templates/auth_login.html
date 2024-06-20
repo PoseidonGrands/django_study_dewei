@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        input{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+{% if not user.is_authenticated %}
+    <form action="{% url 'auth_login' %}" method="post">
+      {% csrf_token %}
+        用户名<input type="text" name="username" placeholder="请输入用户名">
+        密码<input type="password" name="password" placeholder="请输入密码">
+        <input id="submit" type="submit" value="登录">
+        {{ error }}
+    </form>
+{% else %}
+    <a href="{% url 'auth_logout' %}">退出登录</a>
+{% endif %} 
+
+</body>
+</html>

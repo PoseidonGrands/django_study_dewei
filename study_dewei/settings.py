@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'orm_test',
     'orm_sqlalchemy_test',
     'redis_test',
-    'mongo_test'
+    'mongo_test',
+    'form_test',
+    'auth_test'
 ]
 
 MIDDLEWARE = [
@@ -144,9 +146,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 

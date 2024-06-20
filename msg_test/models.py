@@ -1,3 +1,5 @@
+import time
+
 from django.db import models
 
 from msg_test.consts import MessageType
@@ -17,3 +19,7 @@ class Message(models.Model):
             return MessageType[self.msg_type]
         except:
             return MessageType['info']
+
+    def convert_time(self):
+        _time = time.localtime(self.create_time)
+        return time.strftime('%Y-%m-%d %H-%M-%S', _time)

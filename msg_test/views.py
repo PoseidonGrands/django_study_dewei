@@ -4,6 +4,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import *
+from .forms import *
 
 from msg_test.consts import MessageType
 
@@ -73,6 +74,47 @@ def create_msg_data(request, msg_type):
 
 def get_msg_data(request):
     template_file = 'get_msg_data.html'
+
+    # 搜索条件
+    search = request.GET.get('search', '')
+    # 从数据库读取消息
+    print(search)
+    if search:
+        msgs = Message.objects.filter(content__contains=search)
+    else:
+        msgs = Message.objects.all()
+
+    return render(request, template_file,
+                  {
+                      'msgs': msgs
+                  })
+
+def create_msg_data_2(request):
+    template_file = 'create_msg_data_2.html'
+
+    if request.method == 'GET':
+        return render(request, template_file, {
+            'form': MessageForm
+        })
+    else:
+        # 表单验证
+        form = MessageForm(request.POST)
+        if not form.is_valid():
+            return render(request, template_file, {
+                # ！！！！！注意：应该传递表单实例 form 到模板中，而不是重新创建一个新的表单实例 MessageForm
+                # 'form': MessageForm   这种方式是错的
+                'form': form
+            })
+        msg = form.cleaned_data.get('message')
+        msg_type = form.cleaned_data.get('message_type')
+
+        Message.objects.create(content=msg, msg_type=msg_type.value[0], create_time=time.time())
+
+        return redirect(reverse('get_msg_data_2'))
+
+
+def get_msg_data_2(request):
+    template_file = 'get_msg_data_2.html'
 
     # 搜索条件
     search = request.GET.get('search', '')
