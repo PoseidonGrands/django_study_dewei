@@ -1,9 +1,72 @@
 import jieba
 from django import forms
+from django.contrib.auth.models import *
+from django.contrib.auth import authenticate
 from .consts import *
 
 # 动态载入消息类型
 MessageTypeChoice = tuple([(message.value[0], message.value[0]) for message in MessageType])
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(widget=forms.TextInput)
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+
+        # 判断用户名、密码是否已填写
+        if not username:
+            raise forms.ValidationError('用户名未填写')
+        if not password:
+            raise forms.ValidationError('密码未填写')
+
+        # 数据库是否存在该用户
+        users = User.objects.filter(username=username).exists()
+        if not users:
+            print('用户不存在')
+            raise forms.ValidationError('用户不存在')
+
+        user = authenticate(username=username, password=password)
+        if not user:
+            print('密码不正确')
+            raise forms.ValidationError('密码不正确')
+
+        # 将用户保存
+        self.cleaned_data['user'] = user
+
+        return self.cleaned_data
+
+
+class RegisterForm(forms.Form):
+    username = forms.CharField(widget=forms.TextInput)
+    password = forms.CharField(widget=forms.PasswordInput)
+    check_password = forms.CharField(widget=forms.PasswordInput)
+
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        check_password = self.cleaned_data.get('check_password')
+        # 判断用户名、密码、确认密码是否已填写
+        if not username:
+            raise forms.ValidationError('用户名未填写')
+        if not password:
+            raise forms.ValidationError('密码未填写')
+        if not check_password:
+            raise forms.ValidationError('确认密码未填写')
+        if password != check_password:
+            raise forms.ValidationError('两次输入的密码不一致')
+
+        # 数据库检查是否有该用户
+        user = User.objects.filter(username=username).exists()
+        if user:
+            raise forms.ValidationError('该用户已经注册')
+
+        # 创建用户
+        User.objects.create_user(username=username, password=password)
+
+        return self.cleaned_data
 
 
 class MessageForm(forms.Form):

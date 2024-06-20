@@ -9,5 +9,8 @@ urlpatterns = [
     path('get_msg_data', get_msg_data, name='get_msg_data'),
     path('create_msg_data_2', create_msg_data_2, name='create_msg_data_2'),
     path('get_msg_data_2', get_msg_data_2, name='get_msg_data_2'),
+    path('register', register, name='register'),
+    path('user_login', user_login, name='user_login'),
+    path('user_logout', user_logout, name='user_logout'),
 ]
 
