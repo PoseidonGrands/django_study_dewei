@@ -1,11 +1,14 @@
 import time
 
 from django.db import models
+from django.contrib.auth.models import User
 
 from msg_test.consts import MessageType
 
 
 class Message(models.Model):
+    # 补充字段
+    user = models.ForeignKey(User, null=True, default='', on_delete=models.SET_NULL, related_name='message')
     content = models.TextField()
     msg_type = models.CharField(max_length=32, db_index=True)
     create_time = models.IntegerField(default=0)

@@ -164,3 +164,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# 指定了用于用户登录的 URL
+LOGIN_URL = '/msg_test/user_login'

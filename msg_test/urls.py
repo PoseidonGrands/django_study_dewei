@@ -12,5 +12,6 @@ urlpatterns = [
     path('register', register, name='register'),
     path('user_login', user_login, name='user_login'),
     path('user_logout', user_logout, name='user_logout'),
+    path('add_auth_get_msg', add_auth_get_msg, name='add_auth_get_msg'),
 ]
 

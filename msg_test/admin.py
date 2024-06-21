@@ -4,6 +4,8 @@ from django.utils.html import format_html
 from .models import *
 
 
+"""后台想管理哪个模块就要在对应的模块下添加admin.py文件，并创建该模块的admin类并注册进admin中"""
+
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
     """这里调用注册的model里的变量或函数"""
