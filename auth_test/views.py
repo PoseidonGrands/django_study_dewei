@@ -169,7 +169,6 @@ def auth_login(request):
         if user:
             login(request, user)
             return redirect(reverse('auth_login'))
-
         else:
             return redirect('/auth_test/auth_login?error=用户名或密码不正确')
 
@@ -216,7 +215,7 @@ def b(request):
     if _user not in user_all:
         return redirect('/auth_test/b?error=用户没有登录')
 
-    # 权限要求
+    # 权限要求（1、用户自己有 2、用户加入的组有
     perm_look_b_page = Permission.objects.filter(codename='look_b_page').first()
     if perm_look_b_page:
         users = User.objects.filter(Q(groups__permissions=perm_look_b_page)
